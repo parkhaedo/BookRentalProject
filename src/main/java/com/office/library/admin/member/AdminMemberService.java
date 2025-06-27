@@ -30,6 +30,6 @@ public class AdminMemberService {
 			return ADMIN_ACCOUNT_ALREADY_EXIST;
 		}
 		
-		return 0;
+
 	}
 }
