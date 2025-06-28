@@ -35,5 +35,27 @@ public class AdminMemberController {
 		
 		return nextPage;
 	}
-
+	
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		System.out.println("[AdminMemberController] loginForm()");
+		String nextPage = "admin/member/login_form";
+		return nextPage;
+	}
+	
+	@PostMapping("/loginConfirm")
+	public String loginConfirm(AdminMemberVo adminMemberVo) {
+		System.out.println("[AdminMemberController] loginConfirm()");
+		
+		String nextPage = "admin/member/login_ok";
+		
+		AdminMemberVo loginedAdminMemberVo = adminMemberService.loginConfirm(adminMemberVo);
+		
+		if(loginedAdminMemberVo == null) {
+			nextPage = "admin/member/login_ng";
+		}
+		return nextPage;
+	}
+		
+	
 }

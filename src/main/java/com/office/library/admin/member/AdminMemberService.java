@@ -32,4 +32,17 @@ public class AdminMemberService {
 		
 
 	}
+	
+	public AdminMemberVo loginConfirm(AdminMemberVo adminMemberVo) {
+		System.out.println("[AdminMemberService] loginConfirm()");
+		
+		AdminMemberVo loginedAdminMemberVo = adminMemberDao.selectAdmin(adminMemberVo);
+		
+		if(loginedAdminMemberVo != null)
+			System.out.println("[AdminMemberService] ADMIN MEMBER LOGIN SUCCESS!!");
+		else
+			System.out.println("[AdminMemberService] ADMIN MEMBER LOGIN FAIL!!");
+		
+		return loginedAdminMemberVo;
+	}
 }
