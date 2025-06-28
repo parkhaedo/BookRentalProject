@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin/member")
 public class AdminMemberController {
@@ -44,16 +46,27 @@ public class AdminMemberController {
 	}
 	
 	@PostMapping("/loginConfirm")
-	public String loginConfirm(AdminMemberVo adminMemberVo) {
+	public String loginConfirm(AdminMemberVo adminMemberVo, HttpSession session) {
 		System.out.println("[AdminMemberController] loginConfirm()");
-		
+		System.out.println(session.toString());
 		String nextPage = "admin/member/login_ok";
 		
 		AdminMemberVo loginedAdminMemberVo = adminMemberService.loginConfirm(adminMemberVo);
 		
 		if(loginedAdminMemberVo == null) {
 			nextPage = "admin/member/login_ng";
+		}else {
+			session.setAttribute("loginedAdminMemberVo", loginedAdminMemberVo);
+			session.setMaxInactiveInterval(60*30);
 		}
+		return nextPage;
+	}
+	
+	@RequestMapping(value="/logoutConfirm", method = RequestMethod.GET)
+	public String logoutConfirm(HttpSession session) {
+		System.out.println("[AdminMemberController] logoutConfirm()");
+		String nextPage = "redirect:/admin";
+		session.invalidate();
 		return nextPage;
 	}
 		
