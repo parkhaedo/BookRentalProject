@@ -132,4 +132,25 @@ public class AdminMemberController {
 		return nextPage;
 		
 	}
+	
+	@GetMapping("/findPasswordForm")
+	public String findPasswordForm() {
+		System.out.println("[AdminMemberController] findPasswordForm()");
+		String nextPage = "admin/member/find_password_form";
+		return nextPage;
+	}
+	
+	@PostMapping("/findPasswordConfirm")
+	public String findPasswordConfirm(AdminMemberVo adminMemberVo) {
+		System.out.println("[AdminMemberController] findPasswordConfirm()");
+		
+		String nextPage = "admin/member/find_password_ok";
+		
+		int result = adminMemberService.findPasswordConfirm(adminMemberVo);
+		
+		if(result <= 0)
+			nextPage = "admin/member/find_password_ng";
+		
+		return nextPage;
+	}
 }
