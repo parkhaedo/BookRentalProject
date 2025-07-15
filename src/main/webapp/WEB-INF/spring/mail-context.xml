@@ -9,8 +9,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="앱을 등록한 메일" />  <!-- // 개인 수신 가능한 메일 주소 작성 -->
-		<property name="password" value="앱비밀먼호" />    <!-- // 생성된 앱 비밀번호 입력 -->
+		<property name="username" value="" />  <!-- // 개인 수신 가능한 메일 주소 작성 -->
+		<property name="password" value="" />    <!-- // 생성된 앱 비밀번호 입력 -->
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
