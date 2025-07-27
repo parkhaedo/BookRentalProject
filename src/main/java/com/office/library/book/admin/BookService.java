@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.office.library.book.BookVo;
 
+import java.util.List;
+
 @Service
 public class BookService {
 	
@@ -15,7 +17,7 @@ public class BookService {
 	@Autowired
 	BookDao bookDao;
 	
-	public int registerBookconfirm(BookVo bookVo) {
+	public int registerBookConfirm(BookVo bookVo) {
 		System.out.println("[BookService] registerBookConfirm()");
 		
 		boolean isISBN = bookDao.isISBN(bookVo.getB_isbn());
@@ -30,5 +32,17 @@ public class BookService {
 		}else {
 			return BOOK_ISBN_ALREADY_EXIST;
 		}
+	}
+	
+	public List<BookVo> searchBookConfirm(BookVo bookVo){
+		System.out.println("[BookService] searchBookConfirm");
+		
+		return bookDao.selectBookBySearch(bookVo);
+	}
+	
+	public BookVo bookDetail(int b_no) {
+		System.out.println("[BookService] bookDetail()");
+		
+		return bookDao.selectBook(b_no);
 	}
 }

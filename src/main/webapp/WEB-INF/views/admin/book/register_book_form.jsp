@@ -32,7 +32,7 @@
 		
 			<div class="register_book_form">
 			
-				<form action="<c:url value='/book/admin/registerBookConfirm' />" name="register_book_form" method="post" enctype="multipart/form-data">
+				<form action="<c:url value='/book/admin/registerBookConfirm ' />" name="register_book_form" method="post" enctype="multipart/form-data">
 					
 					<input type="text" name="b_name" placeholder="INPUT BOOK NAME."> <br>
 					<input type="text" name="b_author" placeholder="INPUT BOOK AUTHOR."> <br>
