@@ -109,5 +109,15 @@ public class BookController {
 		return nextPage;
 	}
 	
+	@GetMapping("/deleteBookConfirm")
+	public String deleteBookConfirm(@RequestParam("b_no") int b_no) {
+		System.out.println("[BookController] deleteBookConfirm");
+		String nextPage = "admin/book/delete_book_ok";
+		int result = bookService.deleteBookConfirm(b_no);
+		if(result <= 0)
+			nextPage = "admin/book/delete_book_ng";
+		
+		return nextPage;
+	}
 	
 }

@@ -56,4 +56,10 @@ public class BookService {
 		return bookDao.updateBook(bookVo);
 	}
 	
+	public int deleteBookConfirm(int b_no) {
+		System.out.println("[BookService] deleteBookConfirm()");
+		return bookDao.deleteBook(b_no);
+	}
+
+	
 }

@@ -177,4 +177,19 @@ public class BookDao {
 		}
 		return result;
 	}
+	
+	public int deleteBook(int b_no) {
+		System.out.println("[BookDao] deleteBook()");
+		String sql = "DELETE FROM tbl_book "
+					+"WHERE b_no = ?";
+		
+		int result = -1;
+		
+		try {
+			result = jdbcTemplate.update(sql, b_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
