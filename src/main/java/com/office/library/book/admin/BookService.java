@@ -2,13 +2,18 @@ package com.office.library.book.admin;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 
 import java.util.List;
 
 @Service
 public class BookService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookService.class);
 	
 	final static public int BOOK_ISBN_ALREADY_EXIST = 0;
 	final static public int BOOK_REGISTER_SUCCESS = 1;
@@ -60,6 +65,20 @@ public class BookService {
 		System.out.println("[BookService] deleteBookConfirm()");
 		return bookDao.deleteBook(b_no);
 	}
-
+	
+	public List<RentalBookVo> getRentalBooks(){
+		logger.info("[BookService] getRentalBooks()");
+		return bookDao.selectRentalBooks();
+	}
+	
+	public int returnBookConfirm(int b_no, int rb_no) {
+		logger.info("[BookService] returnBookConfirm");
+		int result = bookDao.updateRentalBook(rb_no);
+		
+		if(result > 0)
+			result = bookDao.updateBook(b_no);
+		
+		return result;
+	}
 	
 }

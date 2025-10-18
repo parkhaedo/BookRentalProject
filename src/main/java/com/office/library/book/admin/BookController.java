@@ -8,15 +8,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.office.library.book.admin.util.UploadFileService;
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/book/admin")
 public class BookController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	
 	@Autowired
 	BookService bookService;
@@ -116,6 +121,29 @@ public class BookController {
 		int result = bookService.deleteBookConfirm(b_no);
 		if(result <= 0)
 			nextPage = "admin/book/delete_book_ng";
+		
+		return nextPage;
+	}
+	
+	@GetMapping("/getRentalBooks")
+	public String getRentalBooks(Model model) {
+		logger.info("[BookController] getRentalBooks()");
+		String nextPage = "admin/book/rental_books";
+		List<RentalBookVo> rentalBookVos = bookService.getRentalBooks();
+		model.addAttribute("rentalBookVos", rentalBookVos);
+		return nextPage;
+	}
+	
+	@GetMapping("/returnBookConfirm")
+	public String returnBookConfirm(@RequestParam("b_no") int b_no,
+									@RequestParam("rb_no")int rb_no) {
+		logger.info("[BookController] returnBookConfirm");
+		String nextPage = "admin/book/return_book_ok";
+		
+		int result = bookService.returnBookConfirm(b_no, rb_no);
+		
+		if(result <= 0)
+			nextPage = "admin/book/return_book_ng";
 		
 		return nextPage;
 	}
