@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import com.office.library.user.member.UserMemberVo;
 
@@ -91,6 +92,41 @@ public class BookController {
 		List<RentalBookVo> rentalBookvos = bookService.listupRentalBookHistory(loginedUserMemberVo.getU_m_no());
 		
 		model.addAttribute("rentalBookVos", rentalBookvos);
+		
+		return nextPage;
+	}
+	
+	@GetMapping("/requestHopeBookForm")
+	public String requestHopeBookForm() {
+		logger.info("[UserBookcontroller] requestHopeBookForm()");
+		String nextPage = "user/book/request_hope_book_form";
+		return nextPage;
+	}
+	
+	@GetMapping("/requestHopeBookConfirm")
+	public String requestHopeBookConfirm(HopeBookVo hopeBookVo, HttpSession session) {
+		logger.info("[UserBookController] requestHopeBookConfirm()");
+		String nextPage = "user/book/request_hope_book_ok";
+		
+		UserMemberVo loginedUserMemberVo = (UserMemberVo)session.getAttribute("loginedUserMemberVo");
+		hopeBookVo.setU_m_no(loginedUserMemberVo.getU_m_no());
+		
+		int result = bookService.requestHopebookConfirm(hopeBookVo);
+		
+		if(result <= 0)
+			nextPage = "user/book/request_hope_book_ng";
+		
+		return nextPage;
+	}
+	
+	@GetMapping("/listupRequestHopeBook")
+	public String listupRequestHopeBook(HttpSession session, Model model) {
+		logger.info("[UserBookController] listupRequestHopeBook");
+		String nextPage = "user/book/list_hope_book";
+		UserMemberVo loginedUserMemberVo = (UserMemberVo)session.getAttribute("loginedUserMemberVo");
+		List<HopeBookVo> hopeBookVos = bookService.listupRequestHopeBook(loginedUserMemberVo.getU_m_no());
+		
+		model.addAttribute("hopeBookVos", hopeBookVos);
 		
 		return nextPage;
 	}

@@ -3,6 +3,7 @@ package com.office.library.book.user;
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,16 @@ public class BookService {
 		logger.info("[BookService] listupRentalBookHistory()");
 		return bookDao.selectRentalBookHistory(u_m_no);
 	}
+	
+	public int requestHopebookConfirm(HopeBookVo hopeBookVo) {
+		logger.info("[BookService] requestHopeBookconfirm()");
+		return bookDao.insertHopeBook(hopeBookVo);
+	}
+	
+	public List<HopeBookVo> listupRequestHopeBook(int u_m_no){
+		logger.info("[BookService] listupRequestHopeBook");
+		return bookDao.selectRequestHopeBook(u_m_no);
+	}
+	
+
 }

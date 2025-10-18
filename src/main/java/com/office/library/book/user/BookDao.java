@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 
 import org.slf4j.Logger;
@@ -184,4 +185,69 @@ public class BookDao {
 		
 		return rentalBookVos;
 	}
+	
+	public int insertHopeBook(HopeBookVo hopeBookVo) {
+		logger.info("[BookDao] insertHopeBook");
+		
+		String sql = "INSERT INTO tbl_hope_book(u_m_no, hb_name, "
+				+ "hb_author, hb_publisher, "
+				+ "hb_publish_year, hb_reg_date, hb_mod_date, hb_result_last_date) "
+				+"VALUES(?, ?, ?, ?, ?, NOW(), NOW(), NOW())";
+		
+		int result = -1;
+		
+		try {
+			result = jdbcTemplate.update(sql, hopeBookVo.getU_m_no(),
+												hopeBookVo.getHb_name(),
+												hopeBookVo.getHb_author(),
+												hopeBookVo.getHb_publisher(),
+												hopeBookVo.getHb_publish_year());			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List<HopeBookVo> selectRequestHopeBook(int u_m_no){
+		logger.info("[BookDao] selectRequestHopeBook");
+		String sql = "SELECT * FROM tbl_hope_book WHERE u_m_no = ?";
+		
+		List<HopeBookVo> hopeBookVos = null;
+		
+		try {
+			hopeBookVos = jdbcTemplate.query(sql, selectHopeBooks(), u_m_no);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return hopeBookVos;
+	}
+	
+	public RowMapper<HopeBookVo> selectHopeBooks(){
+		
+		return new RowMapper<HopeBookVo>() {
+			
+			@Override
+			public HopeBookVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				// TODO Auto-generated method stub
+				HopeBookVo hopeBookVo = new HopeBookVo();
+				
+				hopeBookVo.setHb_no(rs.getInt("hb_no"));
+				hopeBookVo.setU_m_no(rs.getInt("u_m_no"));
+				hopeBookVo.setHb_name(rs.getString("hb_name"));
+				hopeBookVo.setHb_author(rs.getString("hb_author"));
+				hopeBookVo.setHb_publisher(rs.getString("hb_publisher"));
+				hopeBookVo.setHb_publish_year(rs.getString("hb_publish_year"));
+				hopeBookVo.setHb_reg_date(rs.getString("hb_reg_date"));
+				hopeBookVo.setHb_mod_date(rs.getString("hb_mod_date"));
+				hopeBookVo.setHb_result(rs.getInt("hb_result"));
+				hopeBookVo.setHb_result_last_date(rs.getString("hb_result_last_date"));
+				
+				return hopeBookVo;
+			}
+		};
+		
+	}
+	
+	
 }
